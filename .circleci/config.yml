@@ -1,0 +1,14 @@
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@3
+workflows:
+  test:
+    jobs:
+      - cypress/run:
+          install-browsers: true
+          start-command: 'npm run start'
+          cypress-command: 'npx cypress run --spec  cypress/e2e/helpdesk/screenshots.cy.js'
+          post-steps:
+            - run: ls
+            - store_artifacts:
+                path: cypress/screenshots
