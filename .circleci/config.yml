@@ -5,6 +5,7 @@ workflows:
   test:
     jobs:
       - cypress/run:
+      
           install-browsers: true
           start-command: 'npm run start'
           cypress-command: 'npx cypress run --spec  cypress/e2e/helpdesk/screenshots.cy.js'
