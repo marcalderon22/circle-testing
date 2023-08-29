@@ -8,25 +8,28 @@ workflows:
       - cypress/run:
           install-browsers: true
           start-command: 'npm run start'
-          cypress-command: 'npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js'
+          cypress-command: |
+            npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
+            npx cypress run --spec cypress/e2e/testing/test.cy.js
           post-steps:
             - run: ls
             - store_artifacts:
                 path: cypress/screenshots
+
 
   schedule:
     jobs:
       - cypress/run:
           install-browsers: true
           start-command: 'npm run start'
-          cypress-command: 'npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js'
+          cypress-command: npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
           post-steps:
             - run: ls
             - store_artifacts:
                 path: cypress/screenshots
     triggers:
       - schedule:
-          cron: "40 16 * * *"
+          cron: "28 17 * * *"
           filters:
             branches:
               only:
