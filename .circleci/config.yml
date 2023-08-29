@@ -6,7 +6,7 @@ orbs:
 jobs:
   test_firefox:
     docker:
-      - image: 'cypress/browsers:node12.18.4-chrome89-ff86'
+      - image: 'cimg/base:stable'
     steps:
       - checkout
       - run:
@@ -37,4 +37,5 @@ workflows:
             branches:
               only:
                 - main
+
 
