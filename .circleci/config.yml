@@ -13,10 +13,21 @@ workflows:
             - run: ls
             - store_artifacts:
                 path: cypress/screenshots
+workflows:
+  version: 2
   schedule:
+    jobs:
+      - cypress/run:
+          install-browsers: true
+          start-command: 'npm run start'
+          cypress-command: 'npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js'
+          post-steps:
+            - run: ls
+            - store_artifacts:
+                path: cypress/screenshots
     triggers:
       - schedule:
-          cron: "20 16 * * *"
+          cron: "21 16 * * *"
           filters:
             branches:
               only:
