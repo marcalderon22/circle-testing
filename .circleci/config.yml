@@ -3,36 +3,33 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@3.1.3
 
+jobs:
+  test_firefox:
+    docker:
+      - image: 'cypress/browsers:node12.18.4-chrome89-ff86'
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
+          name: Run Cypress Tests
+          command: npx cypress run --browser firefox --spec "cypress/e2e/helpdesk/screenshots.cy.js,cypress/e2e/testing/test.cy.js"
+      - store_artifacts:
+          path: cypress/screenshots
+      - store_artifacts:
+          path: cypress/videos
+
 workflows:
   version: 2
 
   test:
     jobs:
-      - cypress/run:
-          install-browsers: false  # Evita la instalación de navegadores por defecto
-          start-command: 'npm run start'
-          browser: firefox   # Especifica que se use Firefox
-          cypress-command: |
-            npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
-            npx cypress run --spec cypress/e2e/testing/test.cy.js
-          post-steps:
-            - run: ls
-            - store_artifacts:
-                path: cypress/screenshots
-            - store_artifacts:
-                path: cypress/videos
+      - test_firefox
 
   schedule:
     jobs:
-      - cypress/run:
-          install-browsers: false  # Evita la instalación de navegadores por defecto
-          start-command: 'npm run start'
-          browser: firefox   # Especifica que se use Firefox
-          cypress-command: npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
-          post-steps:
-            - run: ls
-            - store_artifacts:
-                path: cypress/screenshots
+      - test_firefox
     triggers:
       - schedule:
           cron: "00 18 * * *"
@@ -40,3 +37,4 @@ workflows:
             branches:
               only:
                 - main
+
