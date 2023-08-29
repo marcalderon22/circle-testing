@@ -32,7 +32,7 @@ workflows:
                 path: cypress/screenshots
     triggers:
       - schedule:
-          cron: "28 17 * * *"
+          cron: "00 18 * * *"
           filters:
             branches:
               only:
