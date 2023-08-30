@@ -16,8 +16,7 @@ workflows:
             - run: ls
             - store_artifacts:
                 path: screen/screenshots
-            - store_artifacts:
-                path: test/videos
+            
 
   schedule:
     jobs:
