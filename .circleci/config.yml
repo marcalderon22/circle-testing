@@ -15,9 +15,9 @@ workflows:
           post-steps:
             - run: ls
             - store_artifacts:
-                path: cypress/screenshots
+                path: screen/screenshots
             - store_artifacts:
-                path: cypress/videos
+                path: test/videos
 
   schedule:
     jobs:
