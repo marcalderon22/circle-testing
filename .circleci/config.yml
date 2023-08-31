@@ -9,13 +9,20 @@ workflows:
     jobs:
       - cypress/run:
           start-command: 'npm run start'
-          cypress-command: |
-            npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
-            npx cypress run --spec cypress/e2e/testing/test.cy.js
+          cypress-command: npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
           post-steps:
             - run: ls
             - store_artifacts:
                 path: cypress/screenshots
+                
+  test2:
+    jobs:
+      - cypress/run:
+          cypress-command: npx cypress run --spec cypress/e2e/testing/test.cy.js
+          post-steps:
+            - run: ls
+            - store_artifacts:
+                path: cypress/videos
             
 
   schedule:
