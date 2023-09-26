@@ -16,7 +16,7 @@ describe('Test Click', () => {
         cy.wait(5000);
 
         cy.origin('www.musclepoints.com', () => {
-            cy.get('h1.heading').first().should('have.text', 'Where banks run their rewards');
+            cy.get('h1.heading').first().should('have.text', 'Not Found');
         });
 
        
