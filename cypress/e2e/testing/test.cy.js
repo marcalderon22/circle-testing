@@ -6,6 +6,7 @@ describe('Test Click', () => {
     });
     
     it('click and search muscle', () => {
+        cy.wait(2000);
         cy.get("#APjFqb").click();
         cy.get("#APjFqb").type("muscle points costa rica");
         cy.wait(1000);
@@ -21,7 +22,9 @@ describe('Test Click', () => {
     });
     
     it('click and search google', () => {
+        cy.wait(2000);
         cy.get("#APjFqb").click();
+        
         cy.get("#APjFqb").type("muscle points costa rica");
         cy.wait(1000);
         cy.get(".gNO89b").first().click();
