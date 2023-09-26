@@ -10,7 +10,7 @@ describe('Test Click', () => {
         cy.get("#APjFqb").click();
         cy.get("#APjFqb").type("muscle points costa rica");
         cy.wait(1000);
-        cy.get(".gNO89b").first().click();
+        cy.get('.gNO89b').eq(1).click();
         cy.wait(5000);
         cy.contains('.LC20lb.MBeuO.DKV0Md', 'Muscle Points').click();
 
@@ -27,7 +27,7 @@ describe('Test Click', () => {
         
         cy.get("#APjFqb").type("muscle points costa rica");
         cy.wait(1000);
-        cy.get(".gNO89b").first().click();
+        cy.get('.gNO89b').eq(1).click();
         cy.wait(5000);
         cy.contains('.LC20lb.MBeuO.DKV0Md', 'Muscle Points').click();
 
