@@ -3,47 +3,57 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@3.1.3
   slack: usertech/circleci-slack-orb@5.1.0
-workflows:
-  version: 2
-  test:
-    jobs:
-      - cypress/run:
-          start-command: 'npm run start'
-          cypress-command: npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
-          post-steps:
-            - run: ls
-            - store_artifacts:
-                path: cypress/screenshots
-                
+
+jobs:
+  cypress_run:
+    executor: cypress/default
+    steps:
+      - checkout
+      - cypress/install
+      - run:
+          name: Run Cypress Tests
+          command: |
+            npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
+      - slack/notify:
+          channel: alerts
+          event: fail
+          template: default_fail_1
+
   test2:
-    jobs:
-      - slack/context: # Agregamos el contexto de Slack al trabajo test2
-          context: slack
-      - cypress/run:
-          cypress-command: npx cypress run --spec cypress/e2e/testing/test.cy.js
-          post-steps:
-            - run: ls
-            - store_artifacts:
-                path: cypress/videos
-            - slack/notify: # Aquí agregamos la notificación de Slack
-                channel: alerts
-                event: fail
-                template: default_fail_1
-            
+    executor: cypress/default
+    steps:
+      - checkout
+      - cypress/install
+      - run:
+          name: Run Cypress Tests for test2
+          command: |
+            npx cypress run --spec cypress/e2e/testing/test.cy.js
+      - slack/notify:
+          channel: alerts
+          event: fail
+          template: default_fail_1
 
   schedule:
+    executor: cypress/default
+    steps:
+      - checkout
+      - cypress/install
+      - run:
+          name: Run Cypress Tests on Schedule
+          command: |
+            npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
+      - slack/notify:
+          channel: alerts
+          event: fail
+          template: default_fail_1
+
+workflows:
+  version: 2
+  test_and_notify:
     jobs:
-      - cypress/run:
-          start-command: 'npm run start'
-          cypress-command: npx cypress run --spec cypress/e2e/helpdesk/screenshots.cy.js
-          post-steps:
-            - run: ls
-            - store_artifacts:
-                path: cypress/screenshots
-    triggers:
+      - cypress_run:
+          context: slack
+      - test2:
+          context: slack
       - schedule:
-          cron: "00 18 * * *"
-          filters:
-            branches:
-              only:
-                - main
+          context: slack
