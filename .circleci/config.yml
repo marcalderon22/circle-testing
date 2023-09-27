@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   cypress: cypress-io/cypress@3.1.3
-
+  slack: usertech/circleci-slack-orb@5.1.0
 workflows:
   version: 2
   test:
@@ -17,12 +17,18 @@ workflows:
                 
   test2:
     jobs:
+      - slack/context: # Agregamos el contexto de Slack al trabajo test2
+          context: slack
       - cypress/run:
           cypress-command: npx cypress run --spec cypress/e2e/testing/test.cy.js
           post-steps:
             - run: ls
             - store_artifacts:
                 path: cypress/videos
+            - slack/notify: # Aquí agregamos la notificación de Slack
+                channel: alerts
+                event: fail
+                template: default_fail_1
             
 
   schedule:
