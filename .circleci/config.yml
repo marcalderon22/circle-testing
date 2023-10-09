@@ -55,5 +55,7 @@ workflows:
           context: slack
       - test2:
           context: slack
+      - mnual-aprroval:
+          type: approval
       - schedule:
           context: slack
