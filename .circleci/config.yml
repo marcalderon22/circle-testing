@@ -55,6 +55,9 @@ workflows:
           context: slack
       - test2:
           context: slack
-          type: approval
       - schedule:
           context: slack
+
+shedules:
+  manual_trigger:
+    cron: "0 0 * * *"
